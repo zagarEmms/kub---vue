@@ -27,9 +27,17 @@
         methods: {
             create_login() {
                 let userLogin = {
-                    email: this.email
+                    email: this.email,
+                    vote: 0
                 }
                 addUser(userLogin)
+            },
+
+            updateVote(){
+                let userLogin ={
+                    vote: "a"
+                } 
+                updateVote(userLogin)
             }
         }
     }

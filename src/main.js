@@ -26,10 +26,17 @@ function addUser (userLogin) {
     const usersListRef = ref(db, 'Users');
     const newUserRef = push(usersListRef);
     set(newUserRef, {
-        email: userLogin.email
+        email: userLogin.email,
+        vote: "0"
     }); 
 }
 
-export { addUser };
+function updateVote (){
+    db.collection("Users").update({
+          vote: "Ice Cream"
+    })
+}
+
+export { addUser, updateVote };
 
 createApp(App).use(router).mount('#app')
