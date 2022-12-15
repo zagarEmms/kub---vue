@@ -30,6 +30,10 @@
                     email: this.email,
                     vote: 0
                 }
+                
+                this.$root.$data.email = data.email
+                localStorage.setItem('email', data.email)
+                localStorage.setItem('vote', data.vote)
                 addUser(userLogin)
             },
 
@@ -38,6 +42,8 @@
                     vote: "a"
                 } 
                 updateVote(userLogin)
+
+            
             }
         }
     }

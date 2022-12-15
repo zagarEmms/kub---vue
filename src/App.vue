@@ -10,6 +10,12 @@ export default {
   name: 'App', 
   components: {
     login
+  },
+  data (){
+    return{
+        email : localStorage.getItem("email"),
+        vote : localStorage.getItem("vote")
+    }
   }
 }
 </script>
