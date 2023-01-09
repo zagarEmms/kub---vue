@@ -1,23 +1,18 @@
 <template>
   <router-view/> 
-  <login />
 </template>
 
 <script>
-import login from '@/components/login.vue'
-
-export default {
-  name: 'App', 
-  components: {
-    login
-  },
-  data (){
-    return{
-        email : localStorage.getItem("email"),
-        vote : localStorage.getItem("vote")
+    export default {
+        name: 'App', 
+        data() {
+            return {
+                email : localStorage.getItem("email"),
+                token : localStorage.getItem("token"),
+                vote : localStorage.getItem("vote")
+            }
+        }
     }
-  }
-}
 </script>
 
 <style>
@@ -54,7 +49,6 @@ export default {
       color: #cdcbe3;
       margin-bottom: 30px;
       font-size: 1.5em;
-      font-weight: bolder;
   }
 
   input{
@@ -78,16 +72,6 @@ export default {
       border-color: goldenrod;
   }
 
-  button{
-      color: #fff;
-      width: 100%;
-      padding: 10px;
-      border-radius: 20px;
-      font-size: 15px;
-      border: none;
-      outline: none;
-      cursor: pointer;
-  }
   .input-box{
       border-radius: 20px;
       padding: 10px;
@@ -103,23 +87,34 @@ export default {
       width: 210px;
       border-color: goldenrod;
   }
+  
+  #button {
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 15px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
 
   .insertBtn{
-      background-color: #6988e1;
-      width: 100px;
-      margin-top: 10px;
+    background-color: #6988e1;
+    width: 100px;
+    margin-top: 10px;
   }
 
   .logo{
-      margin-top: 50px;
+    margin-top: 50px;
   }
 
   .slider-container {
-      display: flex;
-      width: 100%;
-      height: 100vh;
-      overflow-x: scroll;
-      scroll-snap-type: x mandatory;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
   }
 
   .slider-container article {
