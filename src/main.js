@@ -55,7 +55,7 @@ function sumVote (figureId, votes) {
 
     votes = getVotes(voteFeature)
 
-    console.log("ON UPDATE " + votes);
+    //console.log("ON UPDATE " + votes);
     
     let updatedVotes = votes + 1;
 
@@ -86,7 +86,7 @@ function getAllVotes() {
     onValue(votesRef, (snapshot) => {
         votes = snapshot.val();
     });
-    console.log(votes)
+    //console.log(votes)
     return votes;
 }
 

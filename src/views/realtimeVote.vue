@@ -8,20 +8,20 @@
     <article>
         <img src="../assets/cubo.png" id ="cube" alt="cube image" width="70"/> 
         <h2>Color</h2>
-        <h3>Votes: {{currentVotes[0]}}</h3>
+        <h3>Votes: {{colorV}}</h3>
 
     </article>
 
     <article>
         <img src="../assets/prisma1.png" id="prisma" alt="prisma image" width="70"/>
         <h2>Shape</h2>
-        <h3>Votes: {{currentVotes[1]}}</h3>
+        <h3>Votes: {{shapeV}}</h3>
     </article>
 
     <article>
         <img src="../assets/prisma2.png" id = "prisma2" alt="pyramid image" width="70"/>
         <h2>Features</h2>
-        <h3>Votes: {{currentVotes[2]}}</h3>
+        <h3>Votes: {{featuresV}}</h3>
     </article>
   </section>
   <section>
@@ -42,60 +42,116 @@
 
     data() {
       return {
-        currentVotes: []
+        colorV: '',
+        shapeV: '',
+        featuresV:''
       }
     },
 
     beforeMount() {
       var votes = updateImgVote()
-      this.currentVotes[0] = votes[0]
-      this.currentVotes[1] = votes[1]
-      this.currentVotes[2] = votes[2]
+      this.colorV = votes[0]
+      this.shapeV = votes[1]
+      this.featuresV = votes[2]
+      
     },
 
-    updated() {
-        colorV = this.currentVotes[0]
-        shapeV = this.currentVotes[1]
-        featuresV = this.currentVotes[2]
-        console.log(colorV)
-        console.log(shapeV)
-        console.log(featuresV)
-        
-        if (colorV < shapeV && colorV < featuresV) {
-          document.getElementById("cube").style.filter = "contrast(20%)";
-        } else if (shapeV < colorV && shapeV < featuresV) {
-          document.getElementById("prisma").style.filter = "contrast(20%)";
-        } else if (featuresV < colorV && featuresV < shapeV) {
-          document.getElementById("prisma2").style.filter = "contrast(20%)";
-        }
-        
+    mounted(){
+      if (this.colorV < this.shapeV && this.colorV < this.featuresV) {
+          document.getElementById("cube").style.filter = "grayscale(80%)";
+      }
+      if (this.shapeV < this.colorV && this.shapeV < this.featuresV) {
+        document.getElementById("prisma").style.filter = "grayscale(80%)";
+        console.log("shape " + shapeV)
+      }
+      if (this.featuresV < this.colorV && this.featuresV < this.shapeV) {
+        document.getElementById("prisma2").style.filter = "grayscale(80%)";
+      }
+
+      if ((this.colorV < this.shapeV && this.colorV > this.featuresV) || (this.colorV > this.shapeV && this.colorV < this.featuresV)) {
+        document.getElementById("cube").style.filter = "grayscale(45%)";
+      }
+      
+      if ((this.shapeV < this.colorV && this.shapeV > this.featuresV) || (this.shapeV > this.colorV && this.shapeV < this.featuresV)) {
+        document.getElementById("prisma").style.filter = "grayscale(45%)";
+      }
+
+      if ((this.featuresV > this.shapeV && this.featuresV < this.colorV) || (this.featuresV < this.shapeV && this.featuresV > this.colorV)) {
+        document.getElementById("prisma2").style.filter = "grayscale(45%)";
+      }
     },
+
+    /*updated() {
+      colorV = this.currentVotes[0]
+      shapeV = this.currentVotes[1]
+      featuresV = this.currentVotes[2]
+      console.log(colorV)
+      console.log(shapeV)
+      console.log(featuresV)
+        
+      if (this.colorV < this.shapeV && this.colorV < this.featuresV) {
+          document.getElementById("cube").style.filter = "grayscale(80%)";
+      }
+      if (this.shapeV < this.colorV && this.shapeV < this.featuresV) {
+        document.getElementById("prisma").style.filter = "grayscale(80%)";
+        console.log("shape " + shapeV)
+      }
+      if (this.featuresV < this.colorV && this.featuresV < this.shapeV) {
+        document.getElementById("prisma2").style.filter = "grayscale(80%)";
+      }
+      if (this.colorV > this.shapeV && this.colorV > this.featuresV) {
+        document.getElementById("cube").style.filter = "grayscale(0%)";
+      }
+        
+    },*/
 
     methods: {
       update() {
         var votes = updateImgVote()
-        this.currentVotes[0] = votes[0]
-        this.currentVotes[1] = votes[1]
-        this.currentVotes[2] = votes[2]
-        //changeContrastImg()
+        this.colorV = votes[0]
+        this.shapeV = votes[1]
+        this.featuresV = votes[2]
+        console.log(this.colorV)
+        this.changeImageColor()
       }, 
 
-      /*changeContrastImg() {
-        colorV = this.currentVotes[0]
-        shapeV = this.currentVotes[1]
-        featuresV = this.currentVotes[2]
-        
-        if (colorV < shapeV && colorV < featuresV) {
-          document.getElementById("cube").style.filter = "contrast(30%)";
-        } else if (shapeV < colorV && shapeV < featuresV) {
-          document.getElementById("prisma").style.filter = "contrast(30%)";
-        } else if (featuresV < colorV && featuresV < shapeV) {
-          document.getElementById("prisma2").style.filter = "contrast(30%)";
+      changeImageColor() {
+        console.log("color " + this.colorV)
+        if (this.colorV < this.shapeV && this.colorV < this.featuresV) {
+            document.getElementById("cube").style.filter = "grayscale(80%)";
+        }
+        if (this.shapeV < this.colorV && this.shapeV < this.featuresV) {
+          document.getElementById("prisma").style.filter = "grayscale(80%)";
+          console.log(shapeV)
+        }
+        if (this.featuresV < this.colorV && this.featuresV < this.shapeV) {
+          document.getElementById("prisma2").style.filter = "grayscale(80%)";
+        }
+
+        if ((this.colorV < this.shapeV && this.colorV > this.featuresV) || (this.colorV > this.shapeV && this.colorV < this.featuresV)) {
+          document.getElementById("cube").style.filter = "grayscale(60%)";
         }
         
+        if ((this.shapeV < this.colorV && this.shapeV > this.featuresV) || (this.shapeV > this.colorV && this.shapeV < this.featuresV)) {
+          document.getElementById("prisma").style.filter = "grayscale(60%)";
+        }
 
-      }*/
-
+        if ((this.featuresV > this.shapeV && this.featuresV < this.colorV) || (this.featuresV < this.shapeV && this.featuresV > this.colorV)) {
+          document.getElementById("prisma2").style.filter = "grayscale(60%)";
+        }
+        if (this.colorV == this.shapeV) {
+          document.getElementById("prisma").style.filter = "sepia(90%)";
+          document.getElementById("cube").style.filter = "sepia(90%)";
+        }
+        if((this.colorV == this.featuresV)){
+          document.getElementById("cube").style.filter = "sepia(90%)";
+          document.getElementById("prisma2").style.filter = "sepia(90%)";
+        }
+        if (this.shapeV == this.featuresV){
+          document.getElementById("prisma").style.filter = "sepia(90%)";
+          document.getElementById("prisma2").style.filter = "sepia(90%)";
+        }
+      }
     }
   }
 
