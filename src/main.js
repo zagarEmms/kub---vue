@@ -30,7 +30,7 @@ function addUser(userLogin) {
     });
 
     localStorage.setItem('token', newUserRef.key)
-    console.log(localStorage.getItem('token'))
+    //console.log(localStorage.getItem('token'))
 }
 
 function updateVote (figureId) {    
@@ -38,10 +38,13 @@ function updateVote (figureId) {
     update(ref(db, 'Users/' + token), {
         vote: figureId
     });
+
+    sumVote(figureId);
+
 }
 
-function sumVote (figureId) {
-    var voteFeature = '';
+function sumVote (figureId, votes) {
+    let voteFeature = '';
     if (figureId == 1) {
         voteFeature = 'color'
     } else if (figureId == 2) {
@@ -50,13 +53,11 @@ function sumVote (figureId) {
         voteFeature = 'features'
     }
 
-    var currentVotes = getVotes(voteFeature);
-    if (currentVotes == undefined) {
-        currentVotes = 0
-    }
-    //console.log(currentVotes);
-    var updatedVotes = currentVotes + 1;
-    //console.log(updatedVotes);
+    votes = getVotes(voteFeature)
+
+    console.log("ON UPDATE " + votes);
+    
+    let updatedVotes = votes + 1;
 
     switch (figureId) {
         case 1:
@@ -79,17 +80,50 @@ function sumVote (figureId) {
     }
 } 
 
-function getVotes (voteFeature) {
-    var currentVotes;
-    const votesCountRef = ref(db, 'Votes/' + voteFeature);
-    onValue(votesCountRef, (snapshot) => {
-        currentVotes = snapshot.val();
+function getAllVotes() {
+    var votesRef = ref(db, 'Votes/');
+    let votes = [];
+    onValue(votesRef, (snapshot) => {
+        votes = snapshot.val();
     });
-    console.log(currentVotes);
-    
-    return currentVotes
+    console.log(votes)
+    return votes;
 }
 
-export { addUser, updateVote, sumVote };
+function getVotes (voteFeature) {
+    var currentVote;
+    const votesCountRef = ref(db, 'Votes/' + voteFeature);
+    onValue(votesCountRef, (snapshot) => {
+        currentVote = snapshot.val();
+        //console.log("GETTING:" + currentVote);
+    }); 
+    
+    return currentVote;           
+     
+}
+
+function updateImgVote() {
+    let votes = []
+
+    let colorCountRef = ref(db, 'Votes/color');
+    onValue(colorCountRef, (snapshot) => {
+        votes[0] = snapshot.val();
+    });
+
+    let shapeCountRef = ref(db, 'Votes/shape');
+    onValue(shapeCountRef, (snapshot) => {
+        votes[1] = snapshot.val();
+    });
+
+    let featuresCountRef = ref(db, 'Votes/features');
+    onValue(featuresCountRef, (snapshot) => {
+        votes[2] = snapshot.val();
+    });
+
+    return votes
+
+}
+
+export { addUser, updateVote, sumVote, updateImgVote, getAllVotes };
 
 createApp(App).use(router).mount('#app')
