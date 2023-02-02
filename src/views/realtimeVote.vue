@@ -25,7 +25,7 @@
     </article>
   </section>
   <section>
-    <button v-on:click="update()">Refresh votes</button>
+    <button class="refresh_button" v-on:click="update()">Refresh votes</button>
   </section>
 
 </template>
@@ -170,6 +170,17 @@
     color: #cdcbe3;
     font-weight: normal;
     margin-bottom: 40px;
+  }
+
+  .refresh_button {    
+    background-color: #c1a9e5;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 15px;
+    margin-top: 15px;
+    border: none;
+    outline: none;
+    cursor: pointer;
   }
 
 </style>
